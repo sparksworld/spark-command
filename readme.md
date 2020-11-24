@@ -73,8 +73,8 @@ Usage
             development: {
                 region: '',
                 bucket: 'test',
-                sourcePath: './dist', // 要上传本地的路径，此目录最好放在此配置文件同级
-                uploadPath: 'development/test/directory' //注意路径是从bucket开始的路径
+                sourcePath: './dist/javascript', // 要上传本地的路径，此目录最好放在此配置文件同级或下级
+                uploadPath: 'development/test/directory' //oss路径
             },
             production: {
                 region: '',
