@@ -69,7 +69,7 @@ Usage
          * uploadPath 要传到oss对应的对象存储地址
          **/
         envConf: {
-            // 将本地项目中./dist目录上传至bucket为test的`development/test/directory`路径下
+            // 将本地项目中./dist/javascript目录上传至bucket为test的`development/test/directory`路径下
             development: {
                 region: '',
                 bucket: 'test',
