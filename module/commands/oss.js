@@ -108,18 +108,15 @@ module.exports = async function (cmd) {
 				}
 			}
 			async function isExistObject(name, options = {}) {
-				try {
-					await client.head(name, options);
-					return 1;
-				} catch (error) {
-					if (error.code === "NoSuchKey") {
-						console.log("文件不存在");
-					}
-					return 0;
-				}
+				const result = await client.list({
+					prefix: name,
+					delimiter: "/"
+				});
+                
+				return result.objects && result.objects.length > 0
 			}
 			async function backup() {
-				if ((await isExistObject(_oss_target + "/")) == 1) {
+				if (await isExistObject(_oss_target + "/")) {
 					var get_list = await list(_oss_target);
 
 					progress.warn("一共" + get_list.length + "个文件需要备份");
@@ -212,7 +209,9 @@ module.exports = async function (cmd) {
 			}
 			progress.fail(
 				`Unable to find the environment '${cmd.upload}',您可能想运行：\n` +
-					_oss_conf_arr.map((item) => `spark oss --upload ${item}`).join("\n")
+					_oss_conf_arr
+						.map((item) => `spark oss --upload ${item}`)
+						.join("\n")
 			);
 		}
 	}

@@ -184,35 +184,29 @@ module.exports = /*#__PURE__*/function () {
             isExistObject = /*#__PURE__*/function () {
               var _ref3 = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee3(name) {
                 var options,
+                    result,
                     _args3 = arguments;
                 return _regenerator["default"].wrap(function _callee3$(_context3) {
                   while (1) {
                     switch (_context3.prev = _context3.next) {
                       case 0:
                         options = _args3.length > 1 && _args3[1] !== undefined ? _args3[1] : {};
-                        _context3.prev = 1;
-                        _context3.next = 4;
-                        return client.head(name, options);
+                        _context3.next = 3;
+                        return client.list({
+                          prefix: name,
+                          delimiter: "/"
+                        });
 
-                      case 4:
-                        return _context3.abrupt("return", 1);
+                      case 3:
+                        result = _context3.sent;
+                        return _context3.abrupt("return", result.objects && result.objects.length > 0);
 
-                      case 7:
-                        _context3.prev = 7;
-                        _context3.t0 = _context3["catch"](1);
-
-                        if (_context3.t0.code === "NoSuchKey") {
-                          console.log("文件不存在");
-                        }
-
-                        return _context3.abrupt("return", 0);
-
-                      case 11:
+                      case 5:
                       case "end":
                         return _context3.stop();
                     }
                   }
-                }, _callee3, null, [[1, 7]]);
+                }, _callee3);
               }));
 
               return function isExistObject(_x5) {
@@ -231,21 +225,19 @@ module.exports = /*#__PURE__*/function () {
                         return isExistObject(_oss_target + "/");
 
                       case 2:
-                        _context5.t0 = _context5.sent;
-
-                        if (!(_context5.t0 == 1)) {
-                          _context5.next = 13;
+                        if (!_context5.sent) {
+                          _context5.next = 12;
                           break;
                         }
 
-                        _context5.next = 6;
+                        _context5.next = 5;
                         return list(_oss_target);
 
-                      case 6:
+                      case 5:
                         get_list = _context5.sent;
                         progress.warn("一共" + get_list.length + "个文件需要备份");
                         copy_time = formatDate(new Date().getTime(), "YYYYMMDDhhmmss");
-                        _context5.next = 11;
+                        _context5.next = 10;
                         return co( /*#__PURE__*/_regenerator["default"].mark(function _callee4() {
                           var i;
                           return _regenerator["default"].wrap(function _callee4$(_context4) {
@@ -284,14 +276,14 @@ module.exports = /*#__PURE__*/function () {
                           }, _callee4);
                         }));
 
-                      case 11:
-                        _context5.next = 14;
+                      case 10:
+                        _context5.next = 13;
                         break;
 
-                      case 13:
+                      case 12:
                         progress.fail("需备份的文件夹不存在！已跳过备份");
 
-                      case 14:
+                      case 13:
                       case "end":
                         return _context5.stop();
                     }

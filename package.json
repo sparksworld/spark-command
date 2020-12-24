@@ -1,6 +1,6 @@
 {
     "name": "spark-command",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "spark-command是一个命令行工具类",
     "main": "index.js",
     "scripts": {
