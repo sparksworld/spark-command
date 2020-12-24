@@ -112,8 +112,8 @@ module.exports = async function (cmd) {
 					prefix: name,
 					delimiter: "/"
 				});
-                
-				return result.objects && result.objects.length > 0
+
+				return result.objects && result.objects.length > 0;
 			}
 			async function backup() {
 				if (await isExistObject(_oss_target + "/")) {
@@ -154,25 +154,27 @@ module.exports = async function (cmd) {
 			if (cmd.backup) {
 				await backup();
 			} else {
-				var prompt = await inquirer.prompt([
-					{
-						type: "list",
-						name: "isBackup",
-						choices: [
-							{
-								name: "是，不备份",
-								value: true
-							},
-							{
-								name: "不，我要备份",
-								value: false
-							}
-						],
-						message: "未备份文件，是否继续？"
+				if (!cmd.yes) {
+					var prompt = await inquirer.prompt([
+						{
+							type: "list",
+							name: "isBackup",
+							choices: [
+								{
+									name: "是，不备份",
+									value: true
+								},
+								{
+									name: "不，我要备份",
+									value: false
+								}
+							],
+							message: "未备份文件，是否继续？"
+						}
+					]);
+					if (!prompt.isBackup) {
+						await backup();
 					}
-				]);
-				if (!prompt.isBackup) {
-					await backup();
 				}
 			}
 			var res = await co(function* () {

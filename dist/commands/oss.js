@@ -83,14 +83,14 @@ module.exports = /*#__PURE__*/function () {
               opera.copyFile(templatePath, targetPath);
             }
 
-            _context7.next = 37;
+            _context7.next = 38;
             break;
 
           case 6:
             _oss_config = require(targetPath);
 
             if (!_oss_config.envConf[cmd.upload]) {
-              _context7.next = 34;
+              _context7.next = 35;
               break;
             }
 
@@ -319,11 +319,16 @@ module.exports = /*#__PURE__*/function () {
             return backup();
 
           case 20:
-            _context7.next = 28;
+            _context7.next = 29;
             break;
 
           case 22:
-            _context7.next = 24;
+            if (cmd.yes) {
+              _context7.next = 29;
+              break;
+            }
+
+            _context7.next = 25;
             return inquirer.prompt([{
               type: "list",
               name: "isBackup",
@@ -337,19 +342,19 @@ module.exports = /*#__PURE__*/function () {
               message: "未备份文件，是否继续？"
             }]);
 
-          case 24:
+          case 25:
             prompt = _context7.sent;
 
             if (prompt.isBackup) {
-              _context7.next = 28;
+              _context7.next = 29;
               break;
             }
 
-            _context7.next = 28;
+            _context7.next = 29;
             return backup();
 
-          case 28:
-            _context7.next = 30;
+          case 29:
+            _context7.next = 31;
             return co( /*#__PURE__*/_regenerator["default"].mark(function _callee6() {
               var _error_length, index, e;
 
@@ -394,13 +399,13 @@ module.exports = /*#__PURE__*/function () {
               }, _callee6);
             }));
 
-          case 30:
+          case 31:
             res = _context7.sent;
             progress.succeed("上传完成, 共" + _local_length + "个文件,成功上传" + Number(_local_length - res) + "个");
-            _context7.next = 37;
+            _context7.next = 38;
             break;
 
-          case 34:
+          case 35:
             _oss_conf_arr = [];
 
             for (key in _oss_config.envConf) {
@@ -411,7 +416,7 @@ module.exports = /*#__PURE__*/function () {
               return "spark oss --upload ".concat(item);
             }).join("\n"));
 
-          case 37:
+          case 38:
           case "end":
             return _context7.stop();
         }

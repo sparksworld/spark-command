@@ -1,57 +1,48 @@
 #!/usr/bin/env node
 
-'use strict';
+"use strict";
 
-var commander = require('commander')
-var figlet = require('figlet');
-var initial = require('../dist/commands/initial')
-var web = require('../dist/commands/web')
-var oss = require('../dist/commands/oss')
-var Spinner = require('../dist/lib/spinner');
+var commander = require("commander");
+var figlet = require("figlet");
+var initial = require("../dist/commands/initial");
+var web = require("../dist/commands/web");
+var oss = require("../dist/commands/oss");
+var Spinner = require("../dist/lib/spinner");
 var progress = new Spinner();
 
+commander.version(`v${require("../package.json").version}`, "-v, --version");
+
+commander.command("mpa").description("初始化多页面项目").action(initial);
 
 commander
-    .version(`v${require('../package.json').version}`, '-v, --version')
+	.command("web")
+	.alias("w")
+	.description("网络页面爬取")
+	.option("-o, --output [dir]")
+	.option("-a, --address [website]", "网站地址")
+	.option("-r, --recursive", "是否递归跟踪锚点下载")
+	.action(web);
 
 commander
-    .command('mpa')
-    .description('初始化多页面项目')
-    .action(initial)
+	.command("oss")
+	.description("阿里云oss上传工具")
+	.option("--init", "初始化配置oss上传功能")
+	.option("--upload [env]", "根据配置文件上传到oss")
+	.option("-b, --backup", "是否启用备份")
+	.option("-y, --yes", "跳过备份询问")
+	.action(oss);
 
+commander.command("*").action(function (task) {
+	progress.fail(`sorry, Are you sure '${task}' in application?`);
+});
 
-commander
-    .command('web')
-    .alias('w')
-    .description('网络页面爬取')
-    .option('-o, --output [dir]')
-    .option('-a, --address [website]', '网站地址')
-    .option('-r, --recursive', '是否递归跟踪锚点下载')
-    .action(web)
-
-
-commander
-    .command('oss')
-    .description('阿里云oss上传工具')
-    .option('--init', '初始化配置oss上传功能')
-    .option('--upload [env]', '根据配置文件上传到oss')
-    .option('-b, --backup', '是否启用备份')
-    .action(oss)
-
-commander
-	.command('*')
-	.action(function (task) {
-		progress.fail(`sorry, Are you sure '${task}' in application?`)
-	})
-
-commander.parse(process.argv)
-
+commander.parse(process.argv);
 
 if (!commander.args.length) {
-    figlet(`only you ~`, function(err, data) {
-        if (err) {
-            console.log('Some thing about figlet is wrong!');
-        }
-        console.log(data);
-    });
+	figlet(`only you ~`, function (err, data) {
+		if (err) {
+			console.log("Some thing about figlet is wrong!");
+		}
+		console.log(data);
+	});
 }
