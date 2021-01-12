@@ -96,9 +96,13 @@ Usage
     ```
     spark oss --upload developemnt
     ```  
-    添加`--backup`会先备份`uploadPath`目录，再进行上传
+    以下指令添加后,将不再询问, 添加`--backup`或`-b`会先备份`uploadPath`目录，再进行上传; 如果添加`--yes`或`-y`将跳过备份直接上传（同名文件直接覆盖）
     ```
     spark oss --upload development --backup
+    ```
+
+    ```
+    spark oss --upload development --yes
     ```
 
 Helper
